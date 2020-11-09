@@ -64,64 +64,6 @@ export default {
       }
     };
   },
-  created() {
-    //wins
-    // console.log(this.board[0][0],this.board[0][1],this.board[0][2]);//123
-    // console.log(this.board[1][0],this.board[1][1],this.board[1][2]);//456
-    // console.log(this.board[2][0],this.board[2][1],this.board[2][2]);//789
-    // console.log(this.board[0][0],this.board[1][1],this.board[2][2]); //159
-    // console.log(this.board[2][2],this.board[1][1],this.board[0][0]);//951
-    // console.log(this.board[0][2],this.board[1][1],this.board[2][0]); //358
-    // console.log(this.board[2][0],this.board[1][1],this.board[0][2]);//758
-    // console.log(this.board[0][2],this.board[0][1],this.board[0][0]);//321
-    // console.log(this.board[1][2],this.board[1][1],this.board[1][0]);//654
-    // console.log(this.board[2][2],this.board[2][1],this.board[2][0]);//951
-    // if (this.currentPlayer === this.board[0][0] ||
-    //     this.board[0][1] || this.board[0][2]) {
-    // } else if (currentPlayer === this.board[1][0] ||
-    //   this.board[1][1] || this.board[1][2]
-    // ) {
-    //   return youWonMessag;
-    // } else if (
-    //   currentPlayer === this.board[2][0] ||
-    //   this.board[2][1] ||this.board[2][2]
-    // ) {
-    //   return youWonMessag;
-    // } else if (
-    //   currentPlayer === this.board[0][0] ||
-    //   this.board[1][1] ||this.board[2][2]
-    // ) {
-    //   return youWonMessag;
-    // } else if (this.board[0][2] || this.board[1][1] || this.board[2][0]) {
-    //   return youWonMessag;
-    // } else if (
-    //   currentPlayer === this.board[2][0] ||
-    //   this.board[1][1] ||
-    //   this.board[0][2]
-    // ) {
-    //   return youWonMessag;
-    // } else if (
-    //   currentPlayer === this.board[0][2] ||
-    //   this.board[0][1] ||
-    //   this.board[0][0]
-    // ) {
-    //   return youWonMessag;
-    // } else if (
-    //   currentPlayer === this.board[1][2] ||
-    //   this.board[1][1] ||
-    //   this.board[1][0]
-    // ) {
-    //   return youWonMessag;
-    // } else if (
-    //   currentPlayer === this.board[2][2] ||
-    //   this.board[2][1] ||
-    //   this.board[2][0]
-    // ) {
-    //   return youWonMessag;
-    // } else {
-    //   draw;
-    // }
-  }
 };
 </script>
 
