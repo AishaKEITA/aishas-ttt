@@ -1,25 +1,21 @@
 <template>
   <div class="square">
-    <v-card @click="printNum" class="pa-2 square-cell" outlined tile>{{
-      this.value
-    }}</v-card>
+    <v-card @click="squareEmit" class="pa-2 square-cell" outlined tile>
+      {{ value }}
+    </v-card>
   </div>
 </template>
 
 <script>
 export default {
   name: "Square",
-  props: ["num"],
+  props: ["id", "value"],
   data() {
-    return {
-      value: null
-    };
+    return {};
   },
   methods: {
-    printNum() {
-      console.log(this.num);
-      console.log(this.value);
-      this.value = "O";
+    squareEmit() {
+      this.$emit("square-click", this.id);
     }
   },
   created() {

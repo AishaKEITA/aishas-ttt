@@ -1,33 +1,37 @@
 // "HTML"
 <template>
   <div class="home">
-    <div class="checkWin"></div>
-    <div class="checkDraw"></div>
     <v-container class="grey lighten-5">
       <v-row no-gutters>
         <v-col v-for="n in 3" :key="n">
-            <Square 
-            v-bind:num="board[0][n-1].num"
-            v-bind:value="board[0][n-1].value"/>
+          <Square
+            v-on:square-click="squareClick"
+            v-bind:id="board[0][n - 1].id"
+            v-bind:value="board[0][n - 1].value"
+          />
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col v-for="n in 3" :key="n">
-            <Square 
-            v-bind:num="board[1][n-1].num"
-            v-bind:value="board[1][n-1].value"/>
+          <Square
+            v-on:square-click="squareClick"
+            v-bind:id="board[1][n - 1].id"
+            v-bind:value="board[1][n - 1].value"
+          />
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col v-for="n in 3" :key="n">
-            <Square 
-            v-bind:num="board[2][n-1].num"
-            v-bind:value="board[2][n-1].value"/>
+          <Square
+            v-on:square-click="squareClick"
+            v-bind:id="board[2][n - 1].id"
+            v-bind:value="board[2][n - 1].value"
+          />
         </v-col>
       </v-row>
     </v-container>
-    <div class="text-sm-center">
-      <v-btn color="primary">RESTART GAME</v-btn>
+    <div class="text-sm-center btn" align="center" justify="center">
+      <v-btn color="primary round">RESTART GAME</v-btn>
     </div>
   </div>
 </template>
@@ -38,53 +42,60 @@ import Square from "./Square.vue";
 export default {
   name: "Home",
   components: {
-      Square: Square,
+    Square: Square
   },
   data() {
     return {
-      currentPlayer: "x", // is  between x and o
+      currentPlayer: "X",
 
       board: [
-        [   { num: 1, value: null },
-            { num: 2, value: null },
-            { num: 3, value: null }
-        ],   
-        [   { num: 4, value: null },
-            { num: 5, value: null },
-            { num: 6, value: null }
+        [
+          { id: 1, value: null }, //is either "X" or "O
+          { id: 2, value: null },
+          { id: 3, value: null }
         ],
-        [   { num: 7, value: null },
-            { num: 8, value: null },
-            { num: 9, value: null }
+        [
+          { id: 4, value: null },
+          { id: 5, value: null },
+          { id: 6, value: null }
+        ],
+        [
+          { id: 7, value: null },
+          { id: 8, value: null },
+          { id: 9, value: null }
         ]
-      ],
-      methods: {
-        //checkWin()
-        //checkDraw() {}
-      }
+      ]
     };
   },
+  methods: {
+    checkWin() {
+      //check horizontal - 3 if statements
+      //check vertical - 3 if statements
+      //check diag - 2 if statements
+    },
+    squareClick(squareId) {
+      const clickedSquare = this.board
+        .flat()
+        .find(square => square.id === squareId);
+      console.log(clickedSquare);
+      clickedSquare.value = this.currentPlayer;
+
+      //checkWin();
+      // currentPlayer won!!!!
+      ////checkDraw();
+
+      if (this.currentPlayer === "X") {
+        this.currentPlayer = "O";
+      } else {
+        this.currentPlayer = "X";
+      }
+    }
+  }
 };
 </script>
 
 // Styling
 <style lang="scss" scoped>
-// .card-border {
-//   border: 3px solid black;
-//   border-top: none;
-//   border-left: none;
-//   //border-right: none;
-//   border-bottom: none;
-//   font-size: 30px;
-//   text-align: center;
-//   cursor: pointer;
-//   padding: 20px;
-// }
-
-// .red {
-//   border-bottom-style: none;
-// }
-// .text-sm-center {
-//   font-size: 54px;
-// }
+.text-sm-center {
+}
 </style>

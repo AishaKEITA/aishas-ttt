@@ -8,7 +8,7 @@
       >
         <v-icon class="mr-3" size="40">mdi-pound</v-icon>
 
-        <span style="font-size: 28px">Aisha's Tic Tac Toe</span>
+        <span style="font-size: 18px">Tic Tac Toe</span>
       </div>
 
       <v-spacer></v-spacer>

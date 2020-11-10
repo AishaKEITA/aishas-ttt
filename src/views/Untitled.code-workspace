@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../vueproject"
+		},
+		{
+			"path": "../../../fullapp"
+		}
+	],
+	"settings": {}
+}
