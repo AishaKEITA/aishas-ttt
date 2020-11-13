@@ -1,6 +1,11 @@
 <template>
-  <div class="square">
-    <v-card @click="squareEmit" class="pa-2 square-cell" outlined tile>
+  <div>
+    <v-card
+      @click="squareEmit"
+      class="pa-2 square-cell red--text"
+      outlined
+      tile
+    >
       {{ value }}
     </v-card>
   </div>
@@ -17,11 +22,15 @@ export default {
     squareEmit() {
       this.$emit("square-click", this.id);
     }
-  },
-  created() {
-    //console.log(this.num);
   }
 };
 </script>
 <style lang="scss" scoped>
+.pa-2,
+.square-cell {
+  height: 80px;
+  color: red;
+  font-size: 50px;
+  text-align: center;
+}
 </style>

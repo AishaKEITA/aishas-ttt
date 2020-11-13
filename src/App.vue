@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="#000" dark border="white">
       <div
         style="cursor: pointer"
         @click="$router.push('/').catch(err => {})"
@@ -8,7 +8,7 @@
       >
         <v-icon class="mr-3" size="40">mdi-pound</v-icon>
 
-        <span style="font-size: 18px">Tic Tac Toe</span>
+        <span style="font-size: 18px">Tic Tac Toe Game</span>
       </div>
 
       <v-spacer></v-spacer>
@@ -26,6 +26,7 @@
       <router-view />
     </v-main>
   </v-app>
+  
 </template>
 
 <script>
@@ -48,4 +49,5 @@ html {
 * {
   box-sizing: border-box !important;
 }
+
 </style>
