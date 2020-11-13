@@ -38,7 +38,6 @@
     >
       <v-btn @click="resetGame" color="normal">RESTART GAME</v-btn>
     </div>
-
     <div class="text-center">
       <v-dialog v-model="dialog" width="300">
         <v-card>
@@ -98,7 +97,6 @@ export default {
       ]
     };
   },
-
   methods: {
     checkWin() {
       if (
@@ -159,7 +157,6 @@ export default {
       }
       return false;
     },
-
     squareClick(squareId) {
       let gameOver = false;
       const clickedSquare = this.board
@@ -176,21 +173,18 @@ export default {
         this.gameOverText = "Player: " + this.currentPlayer + " Won!";
         this.dialog = true;
       }
-
       this.counter++;
       if (!gameOver && this.counter >= 9) {
         this.gameOverText = "IT'S A DRAW!!!";
         this.dialog = true;
         gameOver = true;
       }
-
       if (this.currentPlayer === "X") {
         this.currentPlayer = "O";
       } else {
         this.currentPlayer = "X";
       }
     },
-
     resetGame() {
       for (let i = 0; i < this.board.length; i++) {
         for (let j = 0; j < this.board[i].length; j++) {
