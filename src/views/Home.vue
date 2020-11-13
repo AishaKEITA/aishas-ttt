@@ -40,7 +40,7 @@
     </div>
 
     <div class="text-center">
-      <v-dialog v-model="dialog" width="500">
+      <v-dialog v-model="dialog" width="300">
         <v-card>
           <v-card-title class="headline grey lighten-2">
             {{ gameOverText }}
@@ -56,7 +56,7 @@
                 resetGame();
               "
             >
-              Play Again
+             <div class="play-color" > Play Again</div>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -224,5 +224,8 @@ export default {
 .text-sm-center,
 .btn {
   padding: 2%;
+}
+.play-color {
+  color: red;
 }
 </style>
