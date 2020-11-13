@@ -1,4 +1,4 @@
-// "HTML"
+
 <template>
   <div class="home ">
     <v-container class="grey lighten-5 square-container fluid ma-0 pa-0">
@@ -56,7 +56,7 @@
                 resetGame();
               "
             >
-             <div class="play-color" > Play Again</div>
+              <div class="play-color">Play Again</div>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -64,7 +64,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Square from "./Square.vue";
 export default {
@@ -109,7 +108,6 @@ export default {
       ) {
         return true;
       }
-
       if (
         this.board[1][0].value === this.currentPlayer &&
         this.board[1][0].value === this.board[1][1].value &&
@@ -117,7 +115,6 @@ export default {
       ) {
         return true;
       }
-  
       if (
         this.board[2][0].value === this.currentPlayer &&
         this.board[2][0].value === this.board[2][1].value &&
@@ -125,7 +122,6 @@ export default {
       ) {
         return true;
       }
-    
       if (
         this.board[0][0].value === this.currentPlayer &&
         this.board[0][0].value === this.board[1][0].value &&
@@ -147,7 +143,6 @@ export default {
       ) {
         return true;
       }
-      
       if (
         this.board[0][0].value === this.currentPlayer &&
         this.board[0][0].value === this.board[1][1].value &&
@@ -162,7 +157,7 @@ export default {
       ) {
         return true;
       }
-      return false; 
+      return false;
     },
 
     squareClick(squareId) {
