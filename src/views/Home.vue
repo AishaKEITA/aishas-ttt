@@ -113,28 +113,15 @@ export default {
           return true;
         }
       }
-
       //checking vertical
-      if (
-        this.board[0][0].value === this.currentPlayer &&
-        this.board[0][0].value === this.board[1][0].value &&
-        this.board[1][0].value === this.board[2][0].value
-      ) {
-        return true;
-      }
-      if (
-        this.board[0][1].value === this.currentPlayer &&
-        this.board[0][1].value === this.board[1][1].value &&
-        this.board[1][1].value === this.board[2][1].value
-      ) {
-        return true;
-      }
-      if (
-        this.board[0][2].value === this.currentPlayer &&
-        this.board[0][2].value === this.board[1][2].value &&
-        this.board[1][2].value === this.board[2][2].value
-      ) {
-        return true;
+      for (let i = 0; i < this.board.length; i++) {
+        if (
+          this.board[0][i].value === this.currentPlayer &&
+          this.board[0][i].value === this.board[1][i].value &&
+          this.board[1][i].value === this.board[2][i].value
+        ) {
+          return true;
+        }
       }
       //checking diagonal
       if (
