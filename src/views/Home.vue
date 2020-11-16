@@ -1,6 +1,7 @@
 
 <template>
   <div class="home ">
+    //the render of 3x3 grid with square components
     <v-container class="grey lighten-5 square-container fluid ma-0 pa-0">
       <v-row dense no-gutters>
         <v-col width="100" v-for="n in 3" :key="n">
@@ -68,6 +69,7 @@ import Square from "./Square.vue";
 export default {
   name: "Home",
   components: {
+    //component for the square
     Square: Square
   },
 
@@ -78,6 +80,7 @@ export default {
       gameOverText: "",
       counter: 0,
 
+      //array for the board number for each square
       board: [
         [
           { id: 1, value: null },
@@ -99,6 +102,8 @@ export default {
   },
   methods: {
     checkWin() {
+      //this function contains all the possible win conditions
+      //checking horizontal
       if (
         this.board[0][0].value === this.currentPlayer &&
         this.board[0][0].value === this.board[0][1].value &&
@@ -120,6 +125,8 @@ export default {
       ) {
         return true;
       }
+
+      //checking vertical
       if (
         this.board[0][0].value === this.currentPlayer &&
         this.board[0][0].value === this.board[1][0].value &&
@@ -141,6 +148,7 @@ export default {
       ) {
         return true;
       }
+      //checking diagonal
       if (
         this.board[0][0].value === this.currentPlayer &&
         this.board[0][0].value === this.board[1][1].value &&
@@ -157,6 +165,8 @@ export default {
       }
       return false;
     },
+
+    //this function checks when a square is clicked. The squareId is a parameter
     squareClick(squareId) {
       let gameOver = false;
       const clickedSquare = this.board
@@ -168,29 +178,36 @@ export default {
       }
       clickedSquare.value = this.currentPlayer;
 
+      //this is the gameover function
       gameOver = this.checkWin();
+      //this if statement checks if won the game is won
       if (gameOver) {
         this.gameOverText = "Player: " + this.currentPlayer + " Won!";
         this.dialog = true;
       }
       this.counter++;
+      //this if statement checks if the game is draw
       if (!gameOver && this.counter >= 9) {
         this.gameOverText = "IT'S A DRAW!!!";
         this.dialog = true;
         gameOver = true;
       }
+      //this if statement checks to alternate between player x and player o
       if (this.currentPlayer === "X") {
         this.currentPlayer = "O";
       } else {
         this.currentPlayer = "X";
       }
     },
+
+    //this function resets the game by using a for of loop to acess board
     resetGame() {
       for (let i = 0; i < this.board.length; i++) {
         for (let j = 0; j < this.board[i].length; j++) {
           this.board[i][j].value = null;
         }
       }
+      //this resets the current player x, counter, dialog to false, and game over text
       this.currentPlayer = "X";
       this.counter = 0;
       this.dialog = false;
