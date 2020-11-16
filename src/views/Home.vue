@@ -104,26 +104,14 @@ export default {
     checkWin() {
       //this function contains all the possible win conditions
       //checking horizontal
-      if (
-        this.board[0][0].value === this.currentPlayer &&
-        this.board[0][0].value === this.board[0][1].value &&
-        this.board[0][1].value === this.board[0][2].value
-      ) {
-        return true;
-      }
-      if (
-        this.board[1][0].value === this.currentPlayer &&
-        this.board[1][0].value === this.board[1][1].value &&
-        this.board[1][1].value === this.board[1][2].value
-      ) {
-        return true;
-      }
-      if (
-        this.board[2][0].value === this.currentPlayer &&
-        this.board[2][0].value === this.board[2][1].value &&
-        this.board[2][1].value === this.board[2][2].value
-      ) {
-        return true;
+      for (let i = 0; i < this.board.length; i++) {
+        if (
+          this.board[i][0].value === this.currentPlayer &&
+          this.board[i][0].value === this.board[i][1].value &&
+          this.board[i][1].value === this.board[i][2].value
+        ) {
+          return true;
+        }
       }
 
       //checking vertical
