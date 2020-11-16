@@ -101,8 +101,8 @@ export default {
     };
   },
   methods: {
+    //this function contains all the possible win conditions
     checkWin() {
-      //this function contains all the possible win conditions
       //checking horizontal
       for (let i = 0; i < this.board.length; i++) {
         if (
@@ -113,6 +113,7 @@ export default {
           return true;
         }
       }
+
       //checking vertical
       for (let i = 0; i < this.board.length; i++) {
         if (
@@ -123,6 +124,7 @@ export default {
           return true;
         }
       }
+
       //checking diagonal
       if (
         this.board[0][0].value === this.currentPlayer &&
@@ -138,6 +140,7 @@ export default {
       ) {
         return true;
       }
+
       return false;
     },
 
@@ -155,18 +158,21 @@ export default {
 
       //this is the gameover function
       gameOver = this.checkWin();
+
       //this if statement checks if won the game is won
       if (gameOver) {
         this.gameOverText = "Player: " + this.currentPlayer + " Won!";
         this.dialog = true;
       }
       this.counter++;
+
       //this if statement checks if the game is draw
       if (!gameOver && this.counter >= 9) {
         this.gameOverText = "IT'S A DRAW!!!";
         this.dialog = true;
         gameOver = true;
       }
+
       //this if statement checks to alternate between player x and player o
       if (this.currentPlayer === "X") {
         this.currentPlayer = "O";
