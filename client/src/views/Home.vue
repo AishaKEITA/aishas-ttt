@@ -1,6 +1,6 @@
 
 <template>
-  <div class="home ">
+  <div v-if="board" class="home ">
     //the render of 3x3 grid with square components
     <v-container class="grey lighten-5 square-container fluid ma-0 pa-0">
       <v-row dense no-gutters>
@@ -81,26 +81,20 @@ export default {
       counter: 0,
 
       //array for the board number for each square
-      board: [
-        [
-          { id: 1, value: null },
-          { id: 2, value: null },
-          { id: 3, value: null }
-        ],
-        [
-          { id: 4, value: null },
-          { id: 5, value: null },
-          { id: 6, value: null }
-        ],
-        [
-          { id: 7, value: null },
-          { id: 8, value: null },
-          { id: 9, value: null }
-        ]
-      ]
+      board: null,
     };
   },
+  created() {
+   this.fetchBoard();
+  },
   methods: {
+   fetchBoard() {
+      fetch("http://localhost:3000/board")
+      .then(response => response.json())
+      .then(data => {
+        this.board = data;
+      });
+    },
     //this function contains all the possible win conditions
     checkWin() {
       //checking horizontal
