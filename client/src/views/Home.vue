@@ -112,7 +112,6 @@ export default {
             currentPlayer: "X",
             dialog: false,
             gameOverText: "",
-            counter: 0,
 
             //array for the board number for each square
             board: null
@@ -129,43 +128,65 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     this.board = data;
-                    //TODO: only assign this.board if response.ok
+                    //TODO: use async/await + check response.ok after json()
                 });
         },
-        checkGameOver(){
-            fetch("http://localhost:3000/board/checkGameOver")
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    //TODO: only assign this.board if response.ok
-                });
-        },
-        //this function is calling the backend Api to ensure every click on the square is communicating to the server
-        setSquareBackend(squareId, newValue) {
-            fetch(`http://localhost:3000/board/id/${squareId}`, {
-                method: "PUT",
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: JSON.stringify({ value: newValue })
-            }).then(response => {
-                if (response.ok) {
-                    response.json().then(json => {
-                        const square = this.board
-                            .flat()
-                            .find(square => square.id === squareId);
-                        square.value = json.value;
+        async checkGameOver() {
+            try {
+                const response = await fetch("http://localhost:3000/board/checkGameOver");
+                const data = await response.json();
 
-                        //this if statement checks to alternate between player x and player o
-                        if (this.currentPlayer === "X") {
-                            this.currentPlayer = "O";
-                        } else {
-                            this.currentPlayer = "X";
-                        }
-                    })
+                if (!response.ok) {
+                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
+                    return;
                 }
-            })
+
+                //check the return from checkGameOver and set gameOverText
+                if (data.gameover) {
+                    if (data.winner != null) {
+                        this.gameOverText = "Player: " + this.currentPlayer + " Won!";
+                    } else if (data.winner == null) {
+                        this.gameOverText = "IT'S A DRAW!!!";
+                    }
+                    this.dialog = true;
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        async setSquareBackend(squareId, newValue) {
+            try {
+                const response = await fetch(`http://localhost:3000/board/id/${squareId}`, {
+                    method: "PUT",
+                    headers: { "Content-type": "application/json; charset=UTF-8" },
+                    body: JSON.stringify({ value: newValue })
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
+                    return;
+                }
+
+                const square = this.board
+                    .flat()
+                    .find(square => square.id === squareId);
+                square.value = data.value;
+
+                //this if statement checks to alternate between player x and player o
+                if (this.currentPlayer === "X") {
+                    this.currentPlayer = "O";
+                } else {
+                    this.currentPlayer = "X";
+                }
+                this.checkGameOver();
+            } catch (err) {
+                console.log(err)
+            }
         },
         //this function resets the game by using a for of loop to access board
         resetGame() {
+            //TODO: use async/await + check response.ok
             fetch("http://localhost:3000/board/reset", {
                 method: "POST"
             }).then(response => {
@@ -173,7 +194,7 @@ export default {
                     response.json().then(json => {
                         this.board = json;
 
-                        //this resets the current player x, counter, dialog to false, and game over text
+                        //this resets the current player x, dialog to false, and game over text
                         this.currentPlayer = "X";
                         this.dialog = false;
                         this.gameOverText = "";
@@ -185,20 +206,6 @@ export default {
         squareClick(squareId) {
             //call the api from the server here
             this.setSquareBackend(squareId, this.currentPlayer);
-
-            //this is the gameover function
-            let gameOver = this.checkGameOver();
-
-            //TODO: checks the return from checkGameOver and sets gameOverText
-            if (gameOver) { //gameOver.gameover
-                //if gameOver.gameover == true, gameOver.winner != null
-                this.gameOverText = "Player: " + this.currentPlayer + " Won!";
-                this.dialog = true;
-                //else if (gameOver.gameover == true, gameOver.winner == null) {
-                //  this.gameOverText = "IT'S A DRAW!!!";
-                //  this.dialog = true;
-                //}
-            }
         }
     }
 };
