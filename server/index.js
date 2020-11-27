@@ -71,9 +71,21 @@ function checkWin() {
     return { gameover: false, winner: null };
 }
 
-function checkDraw(gameOver) {
-    if (!gameOver && counter >= 9) {
+function checkDraw(gameOverObject) {
+    if (!gameOverObject.gameover && counter >= 9) {
+        return { gameover: true, winner: null };
     }
+
+    return { gameover: false, winner: null };
+}
+
+function checkGameOver() {
+    let gameOverObject = checkWin();
+    if (gameOverObject.gameover === false) {
+        gameOverObject = checkDraw(gameOverObject);
+    }
+
+    return gameOverObject;
 }
 
 //here you can do different request: post, delete, put, patch etc.
@@ -87,35 +99,39 @@ app.get('/board', (req, res) => {
 //here you can set square to see what is clicked on the client
 //req.params request a parameter of an id
 app.put('/board/id/:id', (req, res) => {
+    //if the game is over, return error
+    let gameOverObject = checkGameOver();
+    if (gameOverObject.gameover) {
+        return res.status(400).send({error: 'the game is over'});
+    }
+
+    //check if square is not found, then return HTTP error
     const id = Number(req.params.id);
     const square = board.flat().find(ele => ele.id === id);
+    if (!square) {
+        return res.status(400).send({error:'invalid square id'});
+    }
 
     //handle the case where the client does not specify a value
-    if (!req.body.value) {
-        return res.status(400).send('value was not specified');
+    if (!req.body.value) { //TODO: change all (400) to send back a json instead of text
+        return res.status(400).send({error: 'value was not specified'});
     }
 
     //check if the value is X or O, else return HTTP error
     if (req.body.value !== "X" && req.body.value !== "O") {
-        return res.status(400).send('value has to be X or O');
-    }
-
-    //check if square is not found, then return HTTP error
-    if (!square) {
-        return res.status(400).send('invalid square id');
+        return res.status(400).send({error: 'value has to be X or O'});
     }
 
     //here we check if square is not clicked by accessing the square object property
     if (square.value != null) {
-        return res.status(400).send('square already has a value');
+        return res.status(400).send({error: 'square already has a value'});
     }
 
     //check that the same player do not play two times, return HTTP error
     if (req.body.value === lastPlayer) {
-        return res.status(400).send(`it is not player ${lastPlayer}'s turn`);
+        return res.status(400).send({error: `it is not player ${lastPlayer}'s turn`});
     }
 
-    //TODO: if the game is over, return error
     square.value = req.body.value;
     lastPlayer = square.value;
     counter++;
@@ -126,7 +142,12 @@ app.put('/board/id/:id', (req, res) => {
 app.get('/board/id/:id', (req, res) => {
     const id = Number(req.params.id);
     const square = board.flat().find(ele => ele.id === id);
-    //TODO: check if square is found, else return HTTP error
+
+    //check if square is not found, then return HTTP error
+    if (!square) {
+        return res.status(400).send({error:'invalid square id'});
+    }
+
     res.send(square);
 });
 //this is a post request for the reset of the board
@@ -137,16 +158,16 @@ app.post('/board/reset', (req, res) => {
         }
     }
     lastPlayer = null;
+    counter = 0;
 
     res.send(board);
 });
 
-//who is the winner? is there a winner? if not, is there a draw?
+//checks if there is a win or a draw
 app.get('/board/checkGameOver', (req, res) => {
-    let aisha = checkWin();
-    console.log(aisha);
-    //TODO: if gameover: false, (no one won), call checkDraw(aisha.gameover) (which should return gameover: true, winner: null, if it is a draw)
-    res.send(aisha);
+    let gameOverObject = checkGameOver();
+
+    res.send(gameOverObject);
 });
 
 app.listen(port, () => {
