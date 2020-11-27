@@ -7,7 +7,7 @@ module.exports = {
         "no-trailing-spaces": "error"
     },
     "parserOptions": {
-        "ecmaVersion": 6
+        "ecmaVersion": 8
     },
     "env": {
         "node": true
