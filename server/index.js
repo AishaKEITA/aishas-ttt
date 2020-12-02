@@ -29,42 +29,32 @@ let board = [
     ]
 ];
 
+function checkForEqual(value1, value2, value3) {
+    return value1 != null &&
+        value1 === value2 &&
+        value2 === value3;
+}
+
 function checkWin() {
     //checking horizontal
     for (let i = 0; i < board.length; i++) {
-        if (
-            board[i][0].value != null &&
-      board[i][0].value === board[i][1].value &&
-      board[i][1].value === board[i][2].value
-        ) {
+        if (checkForEqual(board[i][0].value, board[i][1].value, board[i][2].value)) {
             return { gameover: true, winner: board[i][0].value };
         }
     }
 
     //checking vertical
     for (let i = 0; i < board.length; i++) {
-        if (
-            board[0][i].value != null &&
-      board[0][i].value === board[1][i].value &&
-      board[1][i].value === board[2][i].value
-        ) {
+        if (checkForEqual(board[0][i].value, board[1][i].value, board[2][i].value)) {
             return { gameover: true, winner: board[0][i].value };
         }
     }
 
     //checking diagonal
-    if (
-        board[0][0].value != null &&
-    board[0][0].value === board[1][1].value &&
-    board[1][1].value === board[2][2].value
-    ) {
+    if (checkForEqual(board[0][0].value, board[1][1].value, board[2][2].value)) {
         return { gameover: true, winner: board[0][0].value };
     }
-    if (
-        board[2][0].value != null &&
-    board[2][0].value === board[1][1].value &&
-    board[1][1].value === board[0][2].value
-    ) {
+    if (checkForEqual(board[2][0].value, board[1][1].value, board[0][2].value)) {
         return { gameover: true, winner: board[2][0].value };
     }
 
