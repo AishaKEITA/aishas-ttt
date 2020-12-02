@@ -10,14 +10,24 @@
         dense
         no-gutters
       >
-        <v-col
-          v-for="n in 3"
-          :key="n"
-          width="100"
-        >
+        <v-col width="100">
           <Square
-            :id="board[0][n - 1].id"
-            :value="board[0][n - 1].value"
+            :id="0"
+            :value="board[0]"
+            @square-click="squareClick"
+          />
+        </v-col>
+        <v-col width="100">
+          <Square
+            :id="1"
+            :value="board[1]"
+            @square-click="squareClick"
+          />
+        </v-col>
+        <v-col width="100">
+          <Square
+            :id="2"
+            :value="board[2]"
             @square-click="squareClick"
           />
         </v-col>
@@ -26,14 +36,24 @@
         dense
         no-gutters
       >
-        <v-col
-          v-for="n in 3"
-          :key="n"
-          width="100"
-        >
+        <v-col width="100">
           <Square
-            :id="board[1][n - 1].id"
-            :value="board[1][n - 1].value"
+            :id="3"
+            :value="board[3]"
+            @square-click="squareClick"
+          />
+        </v-col>
+        <v-col width="100">
+          <Square
+            :id="4"
+            :value="board[4]"
+            @square-click="squareClick"
+          />
+        </v-col>
+        <v-col width="100">
+          <Square
+            :id="5"
+            :value="board[5]"
             @square-click="squareClick"
           />
         </v-col>
@@ -42,14 +62,24 @@
         dense
         no-gutters
       >
-        <v-col
-          v-for="n in 3"
-          :key="n"
-          width="100"
-        >
+        <v-col width="100">
           <Square
-            :id="board[2][n - 1].id"
-            :value="board[2][n - 1].value"
+            :id="6"
+            :value="board[6]"
+            @square-click="squareClick"
+          />
+        </v-col>
+        <v-col width="100">
+          <Square
+            :id="7"
+            :value="board[7]"
+            @square-click="squareClick"
+          />
+        </v-col>
+        <v-col width="100">
+          <Square
+            :id="8"
+            :value="board[8]"
             @square-click="squareClick"
           />
         </v-col>
@@ -127,7 +157,7 @@ export default {
             fetch("http://localhost:3000/board")
                 .then(response => response.json())
                 .then(data => {
-                    this.board = data;
+                    this.board = data.board;
                     //TODO: use async/await + check response.ok after json()
                 });
         },
@@ -168,10 +198,10 @@ export default {
                     return;
                 }
 
-                const square = this.board
-                    .flat()
-                    .find(square => square.id === squareId);
-                square.value = data.value;
+                //set square to the value returned in the response
+                const squares = this.board.slice();
+                squares[squareId] = data.value;
+                this.board = squares;
 
                 //this if statement checks to alternate between player x and player o
                 if (this.currentPlayer === "X") {
@@ -191,8 +221,8 @@ export default {
                 method: "POST"
             }).then(response => {
                 if (response.ok) {
-                    response.json().then(json => {
-                        this.board = json;
+                    response.json().then(data => {
+                        this.board = data.board;
 
                         //this resets the current player x, dialog to false, and game over text
                         this.currentPlayer = "X";
