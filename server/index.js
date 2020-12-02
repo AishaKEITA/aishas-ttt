@@ -78,7 +78,7 @@ function checkGameOver() {
 //board will be use to get to the endpoint
 // Simply get Board API. Gets a list of all the Squares
 app.get('/board', (req, res) => {
-    res.send(board);
+    res.send({ board: board });
 });
 //put update data in the server
 //here you can set square to see what is clicked on the client
@@ -126,7 +126,7 @@ app.put('/board/id/:id', (req, res) => {
     lastPlayer = board[id];
     counter++;
 
-    res.send(board[id]);
+    res.send({ value: board[id] });
 });
 // Get Square API. Gets the value of a single Square for example, id/1 etc
 app.get('/board/id/:id', (req, res) => {
@@ -146,7 +146,7 @@ app.post('/board/reset', (req, res) => {
     lastPlayer = null;
     counter = 0;
 
-    res.send(board);
+    res.send({ board: board });
 });
 //checks if there is a win or a draw
 app.get('/board/checkGameOver', (req, res) => {
