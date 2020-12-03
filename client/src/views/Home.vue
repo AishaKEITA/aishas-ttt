@@ -159,14 +159,13 @@ export default {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
-                    return;
+                    throw new Error(`Got error code: ${response.status} Error: ${data.error}`);
                 }
 
                 //set the local data board to match json response
                 this.board = data.board;
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         },
 
@@ -176,8 +175,7 @@ export default {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
-                    return;
+                    throw new Error(`Got error code: ${response.status} Error: ${data.error}`);
                 }
 
                 //check the return from checkGameOver and set gameOverText
@@ -190,7 +188,7 @@ export default {
                     this.dialog = true;
                 }
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         },
 
@@ -204,8 +202,7 @@ export default {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
-                    return;
+                    throw new Error(`Got error code: ${response.status} Error: ${data.error}`);
                 }
 
                 //set square to the value returned in the response
@@ -221,7 +218,7 @@ export default {
                 }
                 this.checkGameOver();
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         },
 
@@ -234,8 +231,7 @@ export default {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
-                    return;
+                    throw new Error(`Got error code: ${response.status} Error: ${data.error}`);
                 }
 
                 //reset the game board
@@ -246,7 +242,7 @@ export default {
                 this.dialog = false;
                 this.gameOverText = "";
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         },
 
