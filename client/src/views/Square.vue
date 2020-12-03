@@ -13,7 +13,16 @@
 <script>
 export default {
     name: "Square",
-    props: ["id", "value"],
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        },
+        value: {
+            type: String,
+            required: true,
+        }
+    },
     data() {
         return {};
     },
