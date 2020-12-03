@@ -16,17 +16,11 @@ let board = [
     "", "", "",
     "", "", "",
     "", "", "",
-]
-
-// logical changes. each change should be done in server + client. verify. commit.
-//1. change existing board array to one dimensional array
-//2. change from value from null to empty string
-//3. remove id
-//4. change square from { value: "" } to ""
+];
 
 //utility function
 function checkForEqual(value1, value2, value3) {
-    return value1 != "" &&
+    return value1 &&
         value1 === value2 &&
         value2 === value3;
 }
@@ -40,14 +34,14 @@ function checkWin() {
         [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6]
-    ]
+    ];
 
     // Iterate over array with winning combinations
     for (let i = 0; i < rows.length; i++) {
-        const [a, b, c] = rows[i]
+        const [a, b, c] = rows[i];
         // Check if the game board contains winning combination
-        if (checkForEqual(board[a] && board[a] === board[b] && board[a] === board[c])) {
-            // Return the winner ('x' or 'o')
+        if (checkForEqual(board[a], board[b], board[c])) {
+            // Return the winner ("X" or "O")
             return { gameover: true, winner: board[a] };
         }
     }
@@ -98,7 +92,7 @@ app.put('/board/id/:id', (req, res) => {
     }
 
     //handle the case where the client does not specify a value
-    if (!req.body.value) { //TODO: change all (400) to send back a json instead of text
+    if (!req.body.value) {
         return res.status(400).send({error: 'value was not specified'});
     }
 
