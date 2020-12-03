@@ -174,7 +174,7 @@ export default {
                 //check the return from checkGameOver and set gameOverText
                 if (data.gameover) {
                     if (data.winner != null) {
-                        this.gameOverText = "Player: " + this.currentPlayer + " Won!";
+                        this.gameOverText = "Player: " + data.winner + " Won!";
                     } else if (data.winner == null) {
                         this.gameOverText = "IT'S A DRAW!!!";
                     }
