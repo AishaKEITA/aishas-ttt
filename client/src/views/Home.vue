@@ -153,14 +153,23 @@ export default {
     },
     methods: {
         //created a fetchBoard function to fetch the board Api from the server and assigned it to the board variable in the template
-        fetchBoard() {
-            fetch("http://localhost:3000/board")
-                .then(response => response.json())
-                .then(data => {
-                    this.board = data.board;
-                    //TODO: use async/await + check response.ok after json()
-                });
+        async fetchBoard() {
+            try {
+                const response = await fetch("http://localhost:3000/board");
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
+                    return;
+                }
+
+                //set the local data board to match json response
+                this.board = data.board;
+            } catch (err) {
+                console.log(err)
+            }
         },
+
         async checkGameOver() {
             try {
                 const response = await fetch("http://localhost:3000/board/checkGameOver");
@@ -184,6 +193,7 @@ export default {
                 console.log(err)
             }
         },
+
         async setSquareBackend(squareId, newValue) {
             try {
                 const response = await fetch(`http://localhost:3000/board/id/${squareId}`, {
@@ -214,24 +224,32 @@ export default {
                 console.log(err)
             }
         },
-        //this function resets the game by using a for of loop to access board
-        resetGame() {
-            //TODO: use async/await + check response.ok
-            fetch("http://localhost:3000/board/reset", {
-                method: "POST"
-            }).then(response => {
-                if (response.ok) {
-                    response.json().then(data => {
-                        this.board = data.board;
 
-                        //this resets the current player x, dialog to false, and game over text
-                        this.currentPlayer = "X";
-                        this.dialog = false;
-                        this.gameOverText = "";
-                    })
+        //this function resets the game by using a for of loop to access board
+        async resetGame() {
+            try {
+                const response = await fetch("http://localhost:3000/board/reset", {
+                    method: "POST"
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.log(`Got error code: ${response.status} Error: ${data.error}`);
+                    return;
                 }
-            })
+
+                //reset the game board
+                this.board = data.board;
+
+                //this resets the current player x, dialog to false, and game over text
+                this.currentPlayer = "X";
+                this.dialog = false;
+                this.gameOverText = "";
+            } catch (err) {
+                console.log(err)
+            }
         },
+
         //this function checks when a square is clicked. The squareId is a parameter
         squareClick(squareId) {
             //call the api from the server here
