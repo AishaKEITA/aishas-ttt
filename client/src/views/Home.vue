@@ -10,82 +10,21 @@
         dense
         no-gutters
       >
-        <v-col width="100">
+        <v-col
+          v-for="row in 3"
+          :key="row"
+          width="100"
+        >
           <Square
-            :id="0"
-            :value="board[0]"
-            @square-click="squareClick"
-          />
-        </v-col>
-        <v-col width="100">
-          <Square
-            :id="1"
-            :value="board[1]"
-            @square-click="squareClick"
-          />
-        </v-col>
-        <v-col width="100">
-          <Square
-            :id="2"
-            :value="board[2]"
-            @square-click="squareClick"
-          />
-        </v-col>
-      </v-row>
-      <v-row
-        dense
-        no-gutters
-      >
-        <v-col width="100">
-          <Square
-            :id="3"
-            :value="board[3]"
-            @square-click="squareClick"
-          />
-        </v-col>
-        <v-col width="100">
-          <Square
-            :id="4"
-            :value="board[4]"
-            @square-click="squareClick"
-          />
-        </v-col>
-        <v-col width="100">
-          <Square
-            :id="5"
-            :value="board[5]"
-            @square-click="squareClick"
-          />
-        </v-col>
-      </v-row>
-      <v-row
-        dense
-        no-gutters
-      >
-        <v-col width="100">
-          <Square
-            :id="6"
-            :value="board[6]"
-            @square-click="squareClick"
-          />
-        </v-col>
-        <v-col width="100">
-          <Square
-            :id="7"
-            :value="board[7]"
-            @square-click="squareClick"
-          />
-        </v-col>
-        <v-col width="100">
-          <Square
-            :id="8"
-            :value="board[8]"
+            v-for="i in 3"
+            :id="indexByRow(i, row)"
+            :key="indexByRow(i, row)"
+            :value="board[indexByRow(i, row)]"
             @square-click="squareClick"
           />
         </v-col>
       </v-row>
     </v-container>
-
     <div
       class="text-sm-center btn rounded small"
       align="center"
@@ -152,6 +91,9 @@ export default {
         this.fetchBoard();
     },
     methods: {
+        indexByRow (index, row, max = 3) {
+            return (row * max + index) - (max + 1)
+        },
         //created a fetchBoard function to fetch the board Api from the server and assigned it to the board variable in the template
         async fetchBoard() {
             try {
